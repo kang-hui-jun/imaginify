@@ -8,24 +8,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
   const searchQuery = (searchParams?.query as string) || "";
 
-  // const images = await getAllImages({ page, searchQuery });
-  const images = await {
-    data: [
-      {
-        transformationType: "restore",
-        publicId: '1.JPG'
-      },
-      {
-        transformationType: "removeBackground",
-        publicId: '2.PNG'
-      },
-      {
-        transformationType: "recolor",
-        publicId: '3.JPG'
-      },
-    ],
-    totalPage: 2,
-  };
+  const images = await getAllImages({ page, searchQuery });
 
   return (
     <>
