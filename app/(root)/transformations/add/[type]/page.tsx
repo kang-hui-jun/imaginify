@@ -1,5 +1,14 @@
-const AddTransformationTypePage = () => {
-    return <div></div>
-}
+import Header from "@/components/shared/Header";
+import { transformationTypes } from "@/constants";
+import { auth } from "@clerk/nextjs";
 
-export default AddTransformationTypePage
+const AddTransformationTypePage = ({ params: { type } }: SearchParamProps) => {
+  const { userId } = auth();
+  const transformation = transformationTypes[type];
+
+  return (
+    <Header title={transformation.title} subtitle={transformation.subTitle} />
+  );
+};
+
+export default AddTransformationTypePage;
