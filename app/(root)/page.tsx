@@ -8,7 +8,11 @@ export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
   const searchQuery = (searchParams?.query as string) || "";
 
-  const images = await getAllImages({ page, searchQuery });
+  // const images = await getAllImages({ page, searchQuery });
+  const images = {
+    data: [],
+    totalPage: 5,
+  };
 
   return (
     <>

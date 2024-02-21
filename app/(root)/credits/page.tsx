@@ -12,11 +12,7 @@ const CreditPage = async () => {
 
   if (!userId) redirect("/sign-in");
 
-  // const user = await getUserById(userId);
-  const user = await {
-    _id: "1"
-  };
-
+  const user = await getUserById(userId);
 
   return (
     <>
