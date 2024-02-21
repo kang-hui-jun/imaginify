@@ -1,20 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { IImage } from "@/lib/database/models/image.model";
-import { formUrlQuery } from "@/lib/utils";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Search } from "./Search";
 import Link from "next/link";
-import { transformationTypes } from "@/constants";
+import { useSearchParams, useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
+
 import {
   Pagination,
   PaginationContent,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
+import { transformationTypes } from "@/constants";
+import { IImage } from "@/lib/database/models/image.model";
+import { formUrlQuery } from "@/lib/utils";
+
+import { Button } from "../ui/button";
+
+import { Search } from "./Search";
 
 export const Collection = ({
   hasSearch = false,
@@ -23,13 +26,14 @@ export const Collection = ({
   page,
 }: {
   images: IImage[];
+  totalPages?: number;
   page: number;
   hasSearch?: boolean;
-  totalPages?: number;
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // PAGINATION HANDLER
   const onPageChange = (action: string) => {
     const pageValue = action === "next" ? Number(page) + 1 : Number(page) - 1;
 
@@ -57,7 +61,7 @@ export const Collection = ({
         </ul>
       ) : (
         <div className="collection-empty">
-          <p className=" p-20-semibold">Empty List</p>
+          <p className="p-20-semibold">Empty List</p>
         </div>
       )}
 
@@ -81,7 +85,7 @@ export const Collection = ({
               onClick={() => onPageChange("next")}
               disabled={Number(page) >= totalPages}
             >
-              <PaginationNext className=" hover:bg-transparent hover:text-white" />
+              <PaginationNext className="hover:bg-transparent hover:text-white" />
             </Button>
           </PaginationContent>
         </Pagination>
@@ -94,7 +98,7 @@ const Card = ({ image }: { image: IImage }) => {
   return (
     <li>
       <Link href={`/transformations/${image._id}`} className="collection-card">
-        {/* <CldImage
+        <CldImage
           src={image.publicId}
           alt={image.title}
           width={image.width}
@@ -103,14 +107,7 @@ const Card = ({ image }: { image: IImage }) => {
           loading="lazy"
           className="h-52 w-full rounded-[10px] object-cover"
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
-        /> */}
-        <Image
-          src={`/assets/images/${image.publicId}`}
-          alt={image.title}
-          width={1000}
-          height={1000}
         />
-
         <div className="flex-between">
           <p className="p-20-semibold mr-3 line-clamp-1 text-dark-600">
             {image.title}
