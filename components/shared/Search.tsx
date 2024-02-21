@@ -32,8 +32,8 @@ export const Search = () => {
       }
     }, 300);
 
-    return clearTimeout(delayDebounceFn);
-  }, [query, router, searchParams]);
+    return () => clearTimeout(delayDebounceFn);
+  }, [router, searchParams, query]);
 
   return (
     <div className="search">
@@ -47,7 +47,7 @@ export const Search = () => {
       <Input
         className="search-field"
         placeholder="Search"
-        onChange={(e) => e.target.value}
+        onChange={(e) => setQuery(e.target.value)}
       />
     </div>
   );

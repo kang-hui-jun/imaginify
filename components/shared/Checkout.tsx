@@ -1,25 +1,32 @@
 "use client";
 
-import React, { FC, useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useEffect } from "react";
+
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
 import { checkoutCredits } from "@/lib/actions/transaction.action";
 
-interface CheckoutProps {
+import { Button } from "../ui/button";
+
+const Checkout = ({
+  plan,
+  amount,
+  credits,
+  buyerId,
+}: {
   plan: string;
   amount: number;
   credits: number;
   buyerId: string;
-}
-
-const Checkout: FC<CheckoutProps> = ({ plan, amount, credits, buyerId }) => {
+}) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+    loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
   }, []);
 
   useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       toast({
@@ -38,7 +45,7 @@ const Checkout: FC<CheckoutProps> = ({ plan, amount, credits, buyerId }) => {
         className: "error-toast",
       });
     }
-  }, [toast]);
+  }, []);
 
   const onCheckout = async () => {
     const transaction = {

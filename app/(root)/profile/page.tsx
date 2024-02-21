@@ -1,12 +1,13 @@
+import { auth } from "@clerk/nextjs";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import { Collection } from "@/components/shared/Collection";
 import Header from "@/components/shared/Header";
 import { getUserImages } from "@/lib/actions/image.actions";
 import { getUserById } from "@/lib/actions/user.actions";
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import Image from "next/image";
-import { Collection } from "@/components/shared/Collection";
 
-const ProfilePage = async ({ searchParams }: SearchParamProps) => {
+const Profile = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
   const { userId } = auth();
 
@@ -14,6 +15,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
 
   const user = await getUserById(userId);
   const images = await getUserImages({ page, userId: user._id });
+
   return (
     <>
       <Header title="Profile" />
@@ -59,4 +61,4 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   );
 };
 
-export default ProfilePage;
+export default Profile;

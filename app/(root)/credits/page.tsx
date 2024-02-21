@@ -1,13 +1,14 @@
+import { SignedIn, auth } from "@clerk/nextjs";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+
 import Header from "@/components/shared/Header";
+import { Button } from "@/components/ui/button";
 import { plans } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";
-import { SignedIn, auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import Checkout from "@/components/shared/Checkout";
 
-const CreditPage = async () => {
+const Credits = async () => {
   const { userId } = auth();
 
   if (!userId) redirect("/sign-in");
@@ -34,6 +35,7 @@ const CreditPage = async () => {
                 <p className="p-16-regular">{plan.credits} Credits</p>
               </div>
 
+              {/* Inclusions */}
               <ul className="flex flex-col gap-5 py-9">
                 {plan.inclusions.map((inclusion) => (
                   <li
@@ -48,7 +50,7 @@ const CreditPage = async () => {
                       width={24}
                       height={24}
                     />
-                    <p className=" p-16-regular">{inclusion.label}</p>
+                    <p className="p-16-regular">{inclusion.label}</p>
                   </li>
                 ))}
               </ul>
@@ -75,4 +77,4 @@ const CreditPage = async () => {
   );
 };
 
-export default CreditPage;
+export default Credits;
